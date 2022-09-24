@@ -1,0 +1,24 @@
+{
+    "name": "easy/easy-session",
+    "description": "The best easy library package to use in your project!",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Easy\\EasySession\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Safar Umarov",
+            "email": "safarumarov711@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    }
+}
