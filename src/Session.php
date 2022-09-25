@@ -15,6 +15,11 @@ class Session implements SessionInterface
         return $this->isStarted;
     }
 
+    public function isEmpty(): bool
+    {
+        return !(count($_SESSION) > 0);
+    }
+
     public function start(): bool
     {
         if ($this->isStarted) {

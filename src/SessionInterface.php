@@ -20,4 +20,6 @@ interface SessionInterface
     public function setFromExistingKey($newKey, $fromKey): bool;
 
     public function destroy(): void;
+
+    public function isEmpty(): bool;
 }

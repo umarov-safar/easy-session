@@ -28,6 +28,16 @@ class SessionTest extends TestCase
         $this->assertFalse($this->session->isStarted());
     }
 
+    public function test_check_is_session_empty_or_not()
+    {
+        $this->session->set('user', 'Safar');
+
+        $this->assertFalse($this->session->isEmpty());
+
+        $this->session->remove('user');
+        $this->assertTrue($this->session->isEmpty());
+    }
+
     public function test_a_session_can_be_started()
     {
         // SETUP
