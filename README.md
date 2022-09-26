@@ -1,4 +1,4 @@
-# Easy session package
+# Easy php session package for small project 
 
 ## Usage:
 - [Methods](#methods)
