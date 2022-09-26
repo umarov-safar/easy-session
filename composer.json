@@ -1,6 +1,6 @@
 {
     "name": "easy-session/easy-session",
-    "description": "The best easy library to use in your project! PHP session for small project",
+    "description": "The best easy php session library to use in your project! PHP session for small project",
     "type": "library",
     "license": "MIT",
     "autoload": {
