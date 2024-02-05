@@ -3,8 +3,6 @@
 ## Usage:
 - [Methods](#methods)
 - [Examples](#examples)
-- [Session Interface](#session-interface)
-- [Tests](#tests)
 
 ### Installation
 ```
@@ -13,14 +11,14 @@ composer require easy-session/easy-session
 
 
 ### Methods:
-1. Create instance of session class
+1. Get instance of session
 
 ```php
 require_once './vendor/autoload.php';
 
 use Easy\EasySession\Session;
 
-$session = new Session();
+$session = Session::getInstance();
 ```
 
 2. Start session 
@@ -29,7 +27,7 @@ $session = new Session();
 $session->start();
 ```
 
-3. Set value to session by key
+3. Set value by key
 ```php
 $session->set('key', 'values');
 ```
@@ -39,7 +37,7 @@ $session->set('key', 'values');
 $session->get('key');
 ```
 
-4.1 Get default value if key does not exists in session
+4.1 Get default value if key does not exists
 ```php
 $default = $session->get('not_existing_key', 'default value');
 ```
@@ -49,12 +47,12 @@ $default = $session->get('not_existing_key', 'default value');
 $session->all();
 ```
 
-6. Remove item by key
+6. Get item and remove it
 ```php
 $session->remove('key');
 ```
 
-7. Free(clear) all session variables(keys,items)
+7. Free(clear) all session variables
 ```php
 $session->clear();
 ```
@@ -74,13 +72,13 @@ $session->setFromExistingKey('new_key', 'exis_key');
 ```
 
 ### Examples
-1. Start session, set, get and remove methods
+1. Start session and set, get, remove velue
 ```php
 require_once './vendor/autoload.php';
 
 use Easy\EasySession\Session;
 
-$session = new Session();
+$session = Session::getInstance();
 
 $session->start(); // Start session
 
@@ -97,18 +95,14 @@ print_r($session->get('test'))
 //output: NULL
 
 // default value
-print_r($session->get('test', 'if key doesnt exists return this'))
-//output: if key doesnt exists return this
-
+print_r($session->get('test', 'default value'))
+//output: default value
 
 //Remove item from session
 $session->remove('user');
 
-$user = $session->get('user'); // getting user from sesion after removing it
-
-echo '<pre>';
-print_r($user);
-// output: NULL
+// get item and remove it
+$user = $session->get('user'); 
 ```
 
 2. Free all session variables and destroy
@@ -117,7 +111,7 @@ require_once './vendor/autoload.php';
 
 use Easy\EasySession\Session;
 
-$session = new Session();
+$session = Session::getInstance();
 
 $session->start(); // Start session
 
@@ -138,32 +132,4 @@ $session->isEmpty(); // return true
 $session->destroy();
 ```
 
-### Session interface
-```php
-interface SessionInterface
-{
-    public function has(string $key): bool;
-
-    public function getId(): string;
-
-    public function all(): array;
-
-    public function get(string $key): mixed;
-
-    public function set(string $key, mixed $value);
-
-    public function clear() : void;
-
-    public function remove(string $key) : void;
-
-    public function setFromExistingKey($newKey, $fromKey): bool;
-
-    public function destroy(): void;
-
-    public function isEmpty(): bool;
-}
-```
-
-
-### Tests
-All methods covered by test
+### Enjoy it

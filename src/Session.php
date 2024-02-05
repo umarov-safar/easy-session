@@ -8,6 +8,22 @@ class Session implements SessionInterface
 {
     private bool $isStarted = false;
 
+    private static ?self $instance = null;
+
+    private function __construct()
+    {
+    }
+
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new Session();
+        }
+
+        return self::$instance;
+    }
+
+
     public function isStarted(): bool
     {
         $this->isStarted = session_status() === PHP_SESSION_ACTIVE;
@@ -63,11 +79,14 @@ class Session implements SessionInterface
         session_unset();
     }
 
-    public function remove(string $key): void
+    public function remove(string $key): mixed
     {
+        $value = null;
         if ($this->has($key)) {
             unset($_SESSION[$key]);
         }
+
+        return $value;
     }
 
     public function getId(): string
@@ -91,7 +110,7 @@ class Session implements SessionInterface
         return false;
     }
 
-    public function destroy(): void 
+    public function destroy(): void
     {
         $this->clear();
         session_destroy();

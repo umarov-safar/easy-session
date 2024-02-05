@@ -1,4 +1,5 @@
 <?php
+
 namespace Easy\EasySession;
 
 interface SessionInterface
@@ -13,9 +14,9 @@ interface SessionInterface
 
     public function set(string $key, mixed $value);
 
-    public function clear() : void;
+    public function clear(): void;
 
-    public function remove(string $key) : void;
+    public function remove(string $key): mixed;
 
     public function setFromExistingKey($newKey, $fromKey): bool;
 

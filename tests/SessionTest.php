@@ -1,4 +1,5 @@
 <?php
+
 use Easy\EasySession\Session;
 use PHPUnit\Framework\TestCase;
 
@@ -8,11 +9,18 @@ class SessionTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         if (session_status() === PHP_SESSION_ACTIVE) {
             session_destroy();
         }
 
-        $this->session = new Session();
+        $reflection = new \ReflectionClass(Session::class);
+        $instanceProperty = $reflection->getProperty('instance');
+        $instanceProperty->setAccessible(true);
+        $instanceProperty->setValue(null);
+
+        $this->session = Session::getInstance();
         $this->session->start();
     }
 
@@ -40,11 +48,9 @@ class SessionTest extends TestCase
 
     public function test_a_session_can_be_started()
     {
-        // SETUP
-        // DO SOMETHING
+
         $session_status = $this->session->start();
 
-        // MAKE ASSERTION
         $this->assertTrue($this->session->isStarted());
         $this->assertTrue($session_status);
     }
@@ -58,7 +64,7 @@ class SessionTest extends TestCase
 
         // DO SOMETHING
         $this->session->set('products', [
-            $productId1 => ['quantity' => 11, 'name' => 'Product 1'], 
+            $productId1 => ['quantity' => 11, 'name' => 'Product 1'],
             $productId2 => ['quantity' => 3, 'name' => 'Product 2']
         ]);
 
@@ -84,23 +90,23 @@ class SessionTest extends TestCase
 
     public function test_can_get_the_item_from_the_session()
     {
-         // SETUP
-         $defaultExpected = 'not info';
-         // DO SOMETHING
-         $this->session->set('user', [
-             'id' => 12,
-             'name' => 'Safar',
-             'email' => 'test@gmail.com'
-         ]);
- 
-         $user = $this->session->get('user');
-         $notExistingItem = $this->session->get('cart');
-         $notInfo = $this->session->get('info', 'not info');
-         
-         // MAKE ASSERTION
-         $this->assertSame('Safar', $user['name']);
-         $this->assertNull($notExistingItem);
-         $this->assertSame($defaultExpected, $notInfo);
+        // SETUP
+        $defaultExpected = 'not info';
+        // DO SOMETHING
+        $this->session->set('user', [
+            'id' => 12,
+            'name' => 'Safar',
+            'email' => 'test@gmail.com'
+        ]);
+
+        $user = $this->session->get('user');
+        $notExistingItem = $this->session->get('cart');
+        $notInfo = $this->session->get('info', 'not info');
+
+        // MAKE ASSERTION
+        $this->assertSame('Safar', $user['name']);
+        $this->assertNull($notExistingItem);
+        $this->assertSame($defaultExpected, $notInfo);
     }
 
 
@@ -114,17 +120,17 @@ class SessionTest extends TestCase
             'email' => 'test@gmail.com'
         ]);
 
-        $this->session->remove('user') ;
-        
+        $this->session->remove('user');
+
         //Make assertion
         $this->assertNull($this->session->get('user'));
     }
 
- 
+
     public function test_can_clear_all_sessions()
     {
         $this->session->set("users", ['name' => "Safar"]);
-        $this->session->set("cart", ['qty' =>1, 'name' => 'test']);
+        $this->session->set("cart", ['qty' => 1, 'name' => 'test']);
 
         $this->session->clear();
 
@@ -135,7 +141,7 @@ class SessionTest extends TestCase
     public function test_can_get_all_sessionS_attributes()
     {
         $this->session->set("user", ['name' => "Safar"]);
-        $this->session->set("cart", ['qty' =>1, 'name' => 'test']);
+        $this->session->set("cart", ['qty' => 1, 'name' => 'test']);
 
         $this->assertCount(2, $this->session->all());
         $this->assertArrayHasKey('user', $this->session->all());
@@ -152,11 +158,11 @@ class SessionTest extends TestCase
     public function test_check_can_set_from_existion_key()
     {
         $this->session->set("user", ['name' => "Safar"]);
-        
+
         $setted = $this->session->setFromExistingKey('guest', 'user');
         $this->assertTrue($setted);
 
-        
+
         $setted = $this->session->setFromExistingKey('guest', 'not_user');
         $this->assertFalse($setted);
 
@@ -172,6 +178,4 @@ class SessionTest extends TestCase
         // if the same than true otherwise false
         $this->assertTrue(!$diff, 'The array does not contain the following keys: ' . implode(',', $keys));
     }
-
-
 }
