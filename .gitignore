@@ -7,3 +7,5 @@ vendor
 .php-cs-fixer
 
 phpunit.xml
+
+.php-cs-fixer.cache
