@@ -12,7 +12,7 @@ interface SessionInterface
 
     public function get(string $key): mixed;
 
-    public function set(string $key, mixed $value);
+    public function set(string $key, mixed $value): self;
 
     public function clear(): void;
 
