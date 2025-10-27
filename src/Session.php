@@ -69,9 +69,11 @@ class Session implements SessionInterface
         return $difault;
     }
 
-    public function set(string $key, mixed $values)
+    public function set(string $key, mixed $values): self
     {
         $_SESSION[$key] = $values;
+
+        return $this;
     }
 
     public function clear(): void
